@@ -3,17 +3,8 @@ class Book < ActiveRecord::Base
   # Validations
   # -----------
 
-  validates :name, presence: true
-  validates :author, presence: true
-  validates :isbn, presence: true
-
-  # Instance Methods
-  # ----------------
-
-  # Exclude some attributes info from json output.
-  def as_json(options={})
-    options[:except] = [:created_at, :updated_at]
-    super(options)
-  end
+  validates :name, presence: true, length: {minimum: 3, maximum: 256}
+  validates :author, presence: true, length: {minimum: 3, maximum: 256}
+  validates :isbn, presence: true, length: {minimum: 10, maximum: 32}
 
 end

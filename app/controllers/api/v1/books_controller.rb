@@ -5,8 +5,14 @@ class Api::V1::BooksController < ApplicationController
     render :json => @books, :status => 200
   end
 
+  def show
+    @book = Book.find_by_id(params[:id])
+    render :json => @book, root: :book, :status => 200
+  end
+
   def create
     @book = Book.new(book_params)
+    #binding.pry
     if @book.valid?
       @book.save
       render json: @book, status: 201
@@ -38,7 +44,7 @@ class Api::V1::BooksController < ApplicationController
 
   private
   def book_params
-    params.permit(:name, :author, :isbn, :description)
+    params.require(:book).permit(:name, :author, :isbn, :description)
   end
 
 end
